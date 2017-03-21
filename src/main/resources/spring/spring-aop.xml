@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd" default-lazy-init="false">
+
+    <!--    利用aop设置spring事务  -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dynamicDataSource"/>
+    </bean>
+
+    <tx:advice id="transactionInterceptor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" rollback-for="Exception" propagation="REQUIRED"/>
+            <tx:method name="del*" rollback-for="Exception" propagation="REQUIRED"/>
+            <tx:method name="update*" rollback-for="Exception" propagation="REQUIRED"/>
+            <tx:method name="search*" rollback-for="Exception" propagation="REQUIRED"/>
+            <tx:method name="*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.test.quartz.service.*.*(..))"/>
+        <aop:advisor advice-ref="transactionInterceptor" pointcut-ref="pointcut"/>
+    </aop:config>
+
+    <import resource="classpath:spring/spring-dynamicDataSource.xml"/>
 
 </beans>

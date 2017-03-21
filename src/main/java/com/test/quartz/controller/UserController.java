@@ -22,8 +22,8 @@ public class UserController {
 
     @RequestMapping(value="/user", method={RequestMethod.GET,RequestMethod.POST})
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response,ModelAndView modelAndView){
-        LOG.debug("进入userController");
-        logger.debug("进入userController啦啦啦");
+        LOG.info("进入userController");
+        logger.info("进入userController啦啦啦");
         modelAndView.setViewName("/index");
         return modelAndView;
     }
