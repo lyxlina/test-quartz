@@ -28,7 +28,13 @@
             <ref bean="testQuartzWorkJobDetail"/>
         </property>
         <property name="cronExpression">
-            <value>0/1 * * * * ?</value>
+            <value>0 */2 * * * ?</value>
+        </property>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="beanName" value="testQuartz"/>
+                <entry key="methodName" value="work"/>
+            </map>
         </property>
     </bean>
     <bean id="testQuartzDoSomeWorkJobDetailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -38,9 +44,29 @@
         <property name="cronExpression">
             <value>0/5 * * * * ?</value>
         </property>
+        <property name="startDelay" value="100000"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="beanName" value="testQuartz"/>
+                <entry key="methodName" value="doSomeWork"/>
+            </map>
+        </property>
     </bean>
 
-    <bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
+        <property name="durability" value="true"/>
+        <property name="requestsRecovery" value="true"/>
+        <property name="description" value="workJob"/>
+    </bean>
+    <bean id="testQuartzDoSomeWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
+        <property name="durability" value="true"/>
+        <property name="requestsRecovery" value="true"/>
+        <property name="description" value="doSomeWorkJob"/>
+    </bean>
+
+    <!--<bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
             <ref bean="testQuartz"/>
         </property>
@@ -53,12 +79,12 @@
         <property name="targetObject">
             <ref bean="testQuartz"/>
         </property>
-        <property name="staticMethod">
+        <property name="targetMethod">
             <value>doSomeWork</value>
         </property>
         <property name="concurrent" value="false"/>
-    </bean>
+    </bean>-->
 
-    <bean id="testQuartz" class="com.test.quartz.quartz.TestQuartz"/>
+    <!--<bean id="testQuartz" class="com.test.quartz.quartz.TestQuartz"/>-->
 
 </beans>
