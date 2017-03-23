@@ -23,12 +23,14 @@
         <property name="requestsRecovery" value="true"/>
         <!--    对应数据库表 qrtz_job_details 中 description  -->
         <property name="description" value="workJob"/>
+        <property name="group" value="workGroup"/>
     </bean>
     <bean id="testQuartzDoSomeWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
         <property name="durability" value="true"/>
         <property name="requestsRecovery" value="true"/>
         <property name="description" value="doSomeWorkJob"/>
+        <property name="group" value="doSomeWorkGroup"/>
     </bean>
 
 </beans>

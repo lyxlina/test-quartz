@@ -10,6 +10,8 @@
         <property name="cronExpression">
             <value>0 0/1 * * * ?</value>
         </property>
+        <property name="group" value="workTriggerGroup"/>
+        <property name="description" value="workTrigger"/>
         <property name="jobDataAsMap">
             <map>
                 <entry key="beanName" value="testQuartz"/>
@@ -24,6 +26,8 @@
         <property name="cronExpression">
             <value>0/30 * * * * ?</value>
         </property>
+        <property name="group" value="doSomeWorkTriggerGroup"/>
+        <property name="description" value="doSomeWorkTrigger"/>
         <property name="jobDataAsMap">
             <map>
                 <entry key="beanName" value="testQuartz"/>
