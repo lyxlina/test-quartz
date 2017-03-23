@@ -15,6 +15,15 @@
         <property name="dataSource" ref="taskDataSource"/>
         <property name="configLocation" value="classpath:quartz.properties"/>
         <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
+        <property name="overwriteExistingJobs" value="true"/>
+        <!--    指定数据库中 sched_name    -->
+        <property name="schedulerName" value="testQuartz"/>
+        <!--    项目启动后，等待30秒后再执行    -->
+        <property name="startupDelay" value="30"/>
+        <!-- 设置自动启动 -->
+        <property name="autoStartup" value="true"/>
+        <!-- 注册触发器 -->
         <property name="triggers">
             <list>
                 <ref bean="testQuartzWorkJobDetailTrigger"/>
@@ -23,68 +32,6 @@
         </property>
     </bean>
 
-    <bean id="testQuartzWorkJobDetailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail">
-            <ref bean="testQuartzWorkJobDetail"/>
-        </property>
-        <property name="cronExpression">
-            <value>0 */2 * * * ?</value>
-        </property>
-        <property name="jobDataAsMap">
-            <map>
-                <entry key="beanName" value="testQuartz"/>
-                <entry key="methodName" value="work"/>
-            </map>
-        </property>
-    </bean>
-    <bean id="testQuartzDoSomeWorkJobDetailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail">
-            <ref bean="testQuartzDoSomeWorkJobDetail"/>
-        </property>
-        <property name="cronExpression">
-            <value>0/5 * * * * ?</value>
-        </property>
-        <property name="startDelay" value="100000"/>
-        <property name="jobDataAsMap">
-            <map>
-                <entry key="beanName" value="testQuartz"/>
-                <entry key="methodName" value="doSomeWork"/>
-            </map>
-        </property>
-    </bean>
-
-    <bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-        <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
-        <property name="durability" value="true"/>
-        <property name="requestsRecovery" value="true"/>
-        <property name="description" value="workJob"/>
-    </bean>
-    <bean id="testQuartzDoSomeWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-        <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
-        <property name="durability" value="true"/>
-        <property name="requestsRecovery" value="true"/>
-        <property name="description" value="doSomeWorkJob"/>
-    </bean>
-
-    <!--<bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject">
-            <ref bean="testQuartz"/>
-        </property>
-        <property name="targetMethod">
-            <value>work</value>
-        </property>
-        <property name="concurrent" value="false"/>
-    </bean>
-    <bean id="testQuartzDoSomeWorkJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject">
-            <ref bean="testQuartz"/>
-        </property>
-        <property name="targetMethod">
-            <value>doSomeWork</value>
-        </property>
-        <property name="concurrent" value="false"/>
-    </bean>-->
-
-    <!--<bean id="testQuartz" class="com.test.quartz.quartz.TestQuartz"/>-->
+    <import resource="classpath:spring/spring-quartz-cronTrigger.xml"/>
 
 </beans>

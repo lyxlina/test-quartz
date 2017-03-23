@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--   MethodInvokingJobDetailFactoryBean 不支持序列化，即不能保存到数据库     -->
+    <!--<bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="testQuartz"/>
+        </property>
+        <property name="targetMethod">
+            <value>work</value>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>-->
+
+    <bean id="testQuartzWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!--   指定自己实现的类，用于序列化保存到数据库  -->
+        <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
+        <!--   QUARTZ 的持久性  -->
+        <property name="durability" value="true"/>
+        <!--requestsRecovery属性必须设置为 true，当Quartz服务被中止后，再次启动或集群中其他机器接手任务时会尝试恢复执行之前未完成的所有任务-->
+        <property name="requestsRecovery" value="true"/>
+        <!--    对应数据库表 qrtz_job_details 中 description  -->
+        <property name="description" value="workJob"/>
+    </bean>
+    <bean id="testQuartzDoSomeWorkJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.test.quartz.quartz.job.JobBean"/>
+        <property name="durability" value="true"/>
+        <property name="requestsRecovery" value="true"/>
+        <property name="description" value="doSomeWorkJob"/>
+    </bean>
+
+</beans>

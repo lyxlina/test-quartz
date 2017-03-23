@@ -18,8 +18,7 @@ public class TestQuartz implements Serializable {
 
         try{
 
-            LOG.debug("定时任务，两分钟执行一次");
-            //Thread.sleep(10000);
+            LOG.info("定时任务，一分钟执行一次");
         }catch (Exception e){
             LOG.error("定时任务出错");
         }
@@ -28,8 +27,7 @@ public class TestQuartz implements Serializable {
 
     public void doSomeWork(){
 
-        LOG.debug("启动一百秒后执行，五秒钟执行一次");
-        //LOG.debug("三十秒钟执行一次");
+        LOG.debug("三十秒钟执行一次");
 
     }
 
