@@ -56,7 +56,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="test-quartz" target="1.8" />
+      <module name="test-quartz" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
