@@ -17,7 +17,7 @@
         <property name="typeAliasesPackage" value="com.test.quartz.model"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <property name="mapperLocations">
-            <value>classpath:mapper/*.xml</value>
+            <value>classpath*:mapper/*.xml</value>
         </property>
     </bean>
 
