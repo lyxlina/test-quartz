@@ -48,12 +48,14 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<!-- 指定数据库表 -->
-		<table domainObjectName="GmCertificate" tableName="gm_certificate"></table>
-		<!-- <table domainObjectName="Role" tableName="gm_role"></table>
-		<table domainObjectName="Authority" tableName="gm_authority"></table>
-		<table domainObjectName="UserRole" tableName="gm_user_role"></table>
-		<table domainObjectName="RoleAuthority" tableName="gm_role_authority"></table> -->
-		
+		<table domainObjectName="QuartzJobDetails" tableName="qrtz_job_details"/>
+		 <table domainObjectName="QuartzTriggers" tableName="qrtz_triggers"/>
+		<table domainObjectName="QuartzCronTriggers" tableName="qrtz_cron_triggers"/>
+		<table domainObjectName="QuartzSchedulerState" tableName="qrtz_scheduler_state"/>
+		<table domainObjectName="QuartzFiredTriggers" tableName="qrtz_fired_triggers"/>
+		<table domainObjectName="QuartzLocks" tableName="qrtz_locks"/>
+		<table domainObjectName="QuartzPausedTriggersGrps" tableName="qrtz_paused_trigger_grps"/>
+
 		<!-- 有些表的字段需要指定java类型
 		 <table schema="" tableName="">
 			<columnOverride column="" javaType="" />
